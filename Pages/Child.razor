@@ -1,0 +1,58 @@
+﻿@page "/Children"
+@using Application.LogicInterfaces
+@using Blazor.Services
+@using Domain.DTOs
+@inject IChildService Service
+<h3>Children</h3>
+<div class="card">
+    <div class="field">
+        <label>Name</label>
+        <input type="text"@bind="Name"/>
+    </div>
+    <div class="field">
+        <label>age</label>
+        <input type="text"@bind="age"/>
+    </div>
+    <div class="field">
+        <label>gender</label>
+        <input type="text"@bind="gender"/>
+    </div>
+    <div class="field">
+         <label>id</label>
+         <input type="text"@bind="id"/>
+    </div> 
+     @if (!string.IsNullOrEmpty(errorLabel))
+                {
+                    <div class="field">
+                        <label style="color: red">
+                            @errorLabel
+                        </label>
+                    </div>
+                }
+</div>
+<button @onclick="create">add children</button>
+@code {
+    private string Name;
+    private int age;
+    private string gender;
+    private int id;
+    private string errorLabel;
+
+    private async Task create()
+    {
+        errorLabel = "";
+        try
+        {
+            await Service.CreateAsync(new NewChildDTO(id,Name,age,gender));
+            id = 0;
+            Name = "";
+            gender = " ";
+            age= 0;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"Error: {e.Message}";
+        }
+    }
+}

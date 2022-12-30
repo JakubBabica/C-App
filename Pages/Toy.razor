@@ -1,0 +1,62 @@
+﻿@page "/Toy"
+@using Blazor.Services
+@using Domain.DTOs
+@inject IToyService Service
+<h3>Toy</h3>
+<div class="card">
+    <div class="field">
+        <label>Name</label>
+        <input type="text"@bind="Name"/>
+    </div>
+    <div class="field">
+        <label>Color</label>
+        <input type="text"@bind="Color"/>
+    </div>
+    <div class="field">
+        <label>Condition</label>
+        <input type="text"@bind="Condition"/>
+    </div>
+    <div class="field">
+         <label>id</label>
+         <input type="text"@bind="id"/>
+    </div> 
+        <div class="field">
+             <label>isFavourite</label>
+             <input type="text"@bind="isFavourite"/>
+        </div> 
+    @if (!string.IsNullOrEmpty(errorLabel))
+                {
+                    <div class="field">
+                        <label style="color: red">
+                            @errorLabel
+                        </label>
+                    </div>
+                }
+</div>
+<button @onclick="createToy">add children</button>
+@code {
+    private string Name;
+    private string Color;
+    private string Condition;
+    private bool isFavourite;
+    private int id;
+    private string errorLabel;
+
+    private async Task createToy()
+    {
+        errorLabel = "";
+        try
+        {
+            // await Service.CreateAsync(new NewChildDTO(id,Name,age,gender));
+            // id = 0;
+            // Name = "";
+            // gender = " ";
+            // age= 0;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"Error: {e.Message}";
+        }
+    }
+}
